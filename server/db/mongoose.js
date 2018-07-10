@@ -8,8 +8,7 @@ mongoose.Promise = global.Promise;
 // };
 
 // mongoose.connect(db.localhost || db.mLab);
-
-mongoose.connect( process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Todo');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Todo');
 
 module.exports = {
 	mongoose
