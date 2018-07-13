@@ -23,6 +23,17 @@ app.post('/todos', (request, response) => {
 		completedAt: request.body.completedAt
 	});
 
+	// var body = _.pick(request.body, ['completed']);
+	// if (_.isBoolean(body.completed) && body.completed) {
+	// 	body.completedAt = new Date().getTime();
+	// }
+	// else {
+	// 	body.completed = false;
+	// 	body.completedAt = null;
+	// }
+
+	// console.log(body);
+
 	todo.save().then((doc) => {
 		response.send(doc);
 	}, (e) => {
@@ -97,6 +108,20 @@ app.patch('/todos/:id', (request, response) => {
 
 		response.send({todo});
 	}).catch((error) => response.status(400).send());
+});
+
+// User apis 
+
+app.post('/users', (request, response) => {
+	var body = _.pick(request.body, ['email', 'password']);
+	var user = new User(body);
+
+	user.save().then((user) => {
+		// response.send(user);
+		return user.generateAuthToken();
+	}).then((token) => {
+		response.header('x-auth', token).send(user)
+	}).catch((error) => response.status(400).send(error));
 });
 
 app.listen(port, () => {
