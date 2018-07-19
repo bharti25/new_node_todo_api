@@ -26,17 +26,6 @@ app.post('/todos', authenticate, (request, response) => {
 		_creator: request.user._id
 	});
 
-	// var body = _.pick(request.body, ['completed']);
-	// if (_.isBoolean(body.completed) && body.completed) {
-	// 	body.completedAt = new Date().getTime();
-	// }
-	// else {
-	// 	body.completed = false;
-	// 	body.completedAt = null;
-	// }
-
-	// console.log(body);
-
 	todo.save().then((doc) => {
 		response.send(doc);
 	}, (e) => {
